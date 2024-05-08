@@ -6,8 +6,13 @@ const app = express();
 const axios = require("axios");
 const port = 8080;
 
-axios.defaults.headers.common["User-Agent"] = process.env.USER_AGENT;
-axios.defaults.headers.common["Cookie"] = process.env.YOUCOM_COOKIE;
+// import config.js
+try {
+	var config = require("./config.js");
+} catch (e) {
+	console.error("Missing config.js, create it from config.example.js and fill in the values.");
+	process.exit(1);
+}
 
 
 app.post("/v1/messages", (req, res) => {
@@ -54,7 +59,7 @@ app.post("/v1/messages", (req, res) => {
 					// 把系统消息加入messages的首条
 					jsonBody.messages.unshift({ role: "system", content: jsonBody.system });
 				}
-				console.log(jsonBody.messages);
+				console.log("message length:" + jsonBody.messages.length);
 				jsonBody.messages.forEach((msg) => {
 					if (msg.role == "system" || msg.role == "user") {
 						if (lastUpdate) {
@@ -78,25 +83,18 @@ app.post("/v1/messages", (req, res) => {
 				});
 				userQuery = userMessage[userMessage.length - 1].question;
 
-				// 获取traceId
-
-				/*let initSearch = await axios.get("https://you.com/_next/data/f3b05a38b379a189a1db48b6665e81f064fbf1b8/en-US/search.json", {
-					params: {
-						q: userQuery.trim(),
-						fromSearchBar: "true",
-						tbm: "youchat",
-						chatMode: "custom"
-					},
-					headers: {
-						"X-Nextjs-Data":"1"
-					},
-				}).then((res) => res.data);
-				if(!initSearch) throw new Error("Failed to init search");
-
-				var traceId = initSearch.pageProps.initialTraceId;*/
-
 				var traceId=uuidv4();
 
+				// decide which session to use randomly
+				let sessionIndex = Math.floor(Math.random() * config.sessions.length);
+				var session = config.sessions[sessionIndex];
+				console.log("using session " + sessionIndex);
+				var instance = axios.create({
+					headers: {
+						"User-Agent": session.user_agent,
+						"Cookie": session.cookie,
+					},
+				});
 
 				// 试算用户消息长度
 				if(encodeURIComponent(JSON.stringify(userMessage)).length + encodeURIComponent(userQuery).length > 32000) { 
@@ -113,14 +111,14 @@ app.post("/v1/messages", (req, res) => {
 					userMessage = [];
 
 					// GET https://you.com/api/get_nonce to get nonce
-					let nonce = await axios("https://you.com/api/get_nonce").then((res) => res.data);
+					let nonce = await instance("https://you.com/api/get_nonce").then((res) => res.data);
 					if (!nonce) throw new Error("Failed to get nonce");
 
 					// POST https://you.com/api/upload to upload user message
 					const form_data = new FormData();
 					var messageBuffer = await createDocx(previousMessages);
 					form_data.append("file", messageBuffer, { filename: "messages.docx", contentType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
-					var uploadedFile = await axios
+					var uploadedFile = await instance
 						.post("https://you.com/api/upload", form_data, {
 							headers: {
 								...form_data.getHeaders(),
@@ -154,7 +152,7 @@ app.post("/v1/messages", (req, res) => {
 
 				// proxy response
 
-				var proxyReq = await axios
+				var proxyReq = await instance
 					.get("https://you.com/api/streamingSearch", {
 						params: {
 							page: "1",
