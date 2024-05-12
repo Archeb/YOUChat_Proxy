@@ -12,11 +12,13 @@
 
 6. 编辑 `start.bat` 文件，把上面的 Cookie 和 User Agent 粘贴进去
 
-7. 启动 start.bat
+7. （可选）如果需要，您可以仿照第6步在`start.bat`中设定一个名为 "PASSWORD" 的环境变量，并将其用作密码。如果没有定义该环境变量，程序将接受所有传入的请求，而不进行任何身份验证
 
-8. 酒馆中选择 Claude，反向代理地址填 http://127.0.0.1:8080/v1 反代密码必须填，随便什么都可以。
+8. 启动 start.bat
 
-9. 开始使用。如果失败了/没有结果/403/Warning 就多重试几次。
+9. 酒馆中选择 Claude，反向代理地址填 http://127.0.0.1:8080/v1 **反代密码必须填, 同时打开流式传输**，随便什么都可以（除非你在第7步设置了PASSWORD）。
+
+10. 开始使用。如果失败了/没有结果/403/Warning 就多重试几次。
 
 ## 注意事项
 
@@ -36,11 +38,13 @@
 
 6. Edit the `start.bat` file and paste the cookie and User Agent into it.
 
-7. Start start.bat
+7. (Optional) you can set an environment variable named `PASSWORD` in `start.bat`, similar to Step 6, and use it as the password. If this environment variable is not defined, the program will accept all incoming requests without performing any authentication.
 
-8. Select Claude in the Tavern and put http://127.0.0.1:8080/v1 as the address of the reverse proxy. Use any random string for password.
+8. Start start.bat
 
-9. Enjoy it. If it fails/no result/403/Warning, try again.
+9. Select Claude in the Tavern and put http://127.0.0.1:8080/v1 as the address of the reverse proxy. **Use any random string for password, also turn on Streaming** (unless you set PASSWORD in step 7).
+
+10. Enjoy it. If it fails/no result/403/Warning, try again.
 
 ## Caution
 
