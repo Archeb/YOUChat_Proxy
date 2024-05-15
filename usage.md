@@ -10,9 +10,30 @@
 
 5. 下载或Clone本项目代码，解压
 
-6. 编辑 `start.bat` 文件，把上面的 Cookie 和 User Agent 粘贴进去
+6. 编辑 `config.example.js` 文件，把上面的 Cookie 和 User Agent 粘贴进去，如果有多个则按如下格式填入。然后另存为把文件名改为 `config.js`
+
+```
+module.exports = {
+    "sessions": [
+        {
+            "user_agent": "...",
+            "cookie": "cookie1"
+        },
+        {
+            "user_agent": "...",
+            "cookie": "cookie2"
+        },
+        {
+            "user_agent": "...",
+            "cookie": "cookie3"
+        }
+    ]
+}
+```
 
 7. （可选）如果需要，您可以仿照第6步在`start.bat`中设定一个名为 "PASSWORD" 的环境变量，并将其用作密码。如果没有定义该环境变量，程序将接受所有传入的请求，而不进行任何身份验证
+
+    （可选）如果需要，可以设置代理。
 
 8. 启动 start.bat
 
@@ -20,9 +41,18 @@
 
 10. 开始使用。如果失败了/没有结果/403/Warning 就多重试几次。
 
+# 使用代理
+
+可以使用本地的socks5或http(s)代理。只需在 start.bat 中设置 `https_proxy` 环境变量。
+
+比如，如要使用 Clash 的默认本地代理，则应设置为 `set https_proxy=http://127.0.0.1:7890`
+
+欲知详细代理格式，请查阅 https://www.npmjs.com/package/proxy-from-env
+
 ## 注意事项
 
 出现 403 错误请重新抓 COOKIE 或者更换代理出口 IP。
+
 
 # Usage
 
@@ -36,15 +66,40 @@
 
 5. Download or Clone the code of this project and unzip it.
 
-6. Edit the `start.bat` file and paste the cookie and User Agent into it.
+6. Edit `config.example.js` as follow。And save the file as `config.js`
+
+```
+module.exports = {
+    "sessions": [
+        {
+            "user_agent": "...",
+            "cookie": "cookie1"
+        },
+        {
+            "user_agent": "...",
+            "cookie": "cookie2"
+        },
+        {
+            "user_agent": "...",
+            "cookie": "cookie3"
+        }
+    ]
+}
+```
 
 7. (Optional) you can set an environment variable named `PASSWORD` in `start.bat`, similar to Step 6, and use it as the password. If this environment variable is not defined, the program will accept all incoming requests without performing any authentication.
+   
+   (Optional) You can set the proxy in start.bat. See below.
 
 8. Start start.bat
 
 9. Select Claude in the Tavern and put http://127.0.0.1:8080/v1 as the address of the reverse proxy. **Use any random string for password, also turn on Streaming** (unless you set PASSWORD in step 7).
 
 10. Enjoy it. If it fails/no result/403/Warning, try again.
+
+# Use custom proxy
+
+Use the `https_proxy` env to set custom proxy. Refer to https://www.npmjs.com/package/proxy-from-env for detail.
 
 ## Caution
 

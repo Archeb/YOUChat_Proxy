@@ -2,6 +2,8 @@ const express = require("express");
 const FormData = require("form-data");
 const docx = require("docx");
 const { v4: uuidv4 } = require("uuid");
+const { ProxyAgent } = require("proxy-agent");
+const agent = new ProxyAgent();
 const app = express();
 const axios = require("axios");
 const port = 8080;
@@ -95,6 +97,7 @@ app.post("/v1/messages", apiKeyAuth, (req, res) => {
 						"User-Agent": session.user_agent,
 						"Cookie": session.cookie,
 					},
+					httpsAgent: agent,
 				});
 
 				// 试算用户消息长度
