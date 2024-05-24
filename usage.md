@@ -18,16 +18,16 @@
 module.exports = {
     "sessions": [
         {
-            "user_agent": "...",
-            "cookie": "cookie1"
+            "user_agent": `...`,
+            "cookie": `cookie1`
         },
         {
-            "user_agent": "...",
-            "cookie": "cookie2"
+            "user_agent": `...`,
+            "cookie": `cookie2`
         },
         {
-            "user_agent": "...",
-            "cookie": "cookie3"
+            "user_agent": `...`,
+            "cookie": `cookie3`
         }
     ]
 }
@@ -76,16 +76,16 @@ module.exports = {
 module.exports = {
     "sessions": [
         {
-            "user_agent": "...",
-            "cookie": "cookie1"
+            "user_agent": `...`,
+            "cookie": `cookie1`
         },
         {
-            "user_agent": "...",
-            "cookie": "cookie2"
+            "user_agent": `...`,
+            "cookie": `cookie2`
         },
         {
-            "user_agent": "...",
-            "cookie": "cookie3"
+            "user_agent": `...`,
+            "cookie": `cookie3`
         }
     ]
 }
