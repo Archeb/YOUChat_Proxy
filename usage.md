@@ -43,7 +43,14 @@ module.exports = {
 
 10. 开始使用。如果失败了/没有结果/403/Warning 就多重试几次。
 
-# 使用代理
+## 抓Cookie和填写格式图文说明
+
+![image](https://github.com/Archeb/YOUChat_Proxy/assets/11910831/df34c2b8-5e9c-4004-ae79-c440e078dc0b)
+
+![image](https://github.com/Archeb/YOUChat_Proxy/assets/11910831/301f7e24-a21e-4e08-837c-1150b23d0e54)
+
+
+## 使用代理
 
 可以使用本地的socks5或http(s)代理。只需在 start.bat 中设置 `https_proxy` 环境变量。
 
@@ -101,7 +108,7 @@ module.exports = {
 
 10. Select the model and Enjoy it. If it fails/no result/403/Warning, try again.
 
-# Use custom proxy
+## Use custom proxy
 
 Use the `https_proxy` env to set custom proxy. Refer to https://www.npmjs.com/package/proxy-from-env for detail.
 
