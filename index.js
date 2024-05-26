@@ -357,6 +357,15 @@ app.listen(port, () => {
 	if (!validApiKey) {
 		console.log(`Proxy is currently running with no authentication`);
 	}
+
+	axios.get('https://ipinfo.io/json')
+		.then(response => {
+			const resJson = response.data;
+			console.log(`Proxy is running with IP addres: \x1b[32m${resJson.ip}\x1b[0m in \x1b[32m${resJson.country}\x1b[0m`);
+		})
+		.catch(error => {
+			console.error(`Error fetching IP info:`, error);
+		});
 });
 
 function apiKeyAuth(req, res, next) {
