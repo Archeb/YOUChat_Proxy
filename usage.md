@@ -49,6 +49,7 @@ module.exports = {
 
 ![image](https://github.com/Archeb/YOUChat_Proxy/assets/11910831/301f7e24-a21e-4e08-837c-1150b23d0e54)
 
+感谢 @amksenshu3915 做的图
 
 ## 使用代理
 
