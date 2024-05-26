@@ -137,6 +137,7 @@ app.post("/v1/chat/completions", apiKeyAuth, (req, res) => {
 			// 试算用户消息长度
 			if (encodeURIComponent(JSON.stringify(userMessage)).length + encodeURIComponent(userQuery).length > 32000) {
 				//太长了，需要上传
+				console.log("Using file upload mode");
 
 				// user message to plaintext
 				let previousMessages = requestBody.messages
