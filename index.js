@@ -37,13 +37,24 @@ const modelMappping = {
 	"gemini-1-5-pro": "gemini_1_5_pro"
 }
 
-// import config.js
-try {
-	var config = require("./config.js");
-} catch (e) {
-	console.error(e);
-	console.error("config.js missing or corrupted, create it from config.example.js and fill in the values.");
-	process.exit(1);
+// import config
+// first try to load from environment variables
+if (process.env.SESSIONS) {
+	try {
+		config = JSON.parse(process.env.SESSIONS);
+	} catch (e) {
+		console.error(e);
+		console.error("SESSIONS environment variable is corrupted, please provide a valid JSON string.");
+		process.exit(1);
+	}
+} else {
+	try {
+		var config = require("./config.js");
+	} catch (e) {
+		console.error(e);
+		console.error("config.js missing or corrupted, create it from config.example.js and fill in the values.");
+		process.exit(1);
+	}
 }
 
 // handle preflight request
