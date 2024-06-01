@@ -37,6 +37,8 @@ module.exports = {
 
     （可选）如果需要，可以设置代理。
 
+    （可选）如果需要，可以启用自定义会话模式（`USE_CUSTOM_MODE`设置为`true`）。可以缩短原系统消息长度、禁用联网、减缓等待时间，可能有助于破限。但有可能导致更容易出现 unusual query volume。
+
 8. 启动 start.bat
 
 9. 酒馆中选择 **Custom (OpenAI-compatible)**，反向代理地址填 http://127.0.0.1:8080/v1 **反代密码必须填**，随便什么都可以（除非你在第7步设置了PASSWORD）。
@@ -102,6 +104,8 @@ module.exports = {
 7. (Optional) you can set an environment variable named `PASSWORD` in `start.bat`, similar to Step 6, and use it as the password. If this environment variable is not defined, the program will accept all incoming requests without performing any authentication.
    
    (Optional) You can set the proxy in start.bat. See below.
+
+   (Optional) You may turn on the custom chat mode by setting `USE_CUSTOM_MODE` env to `true`
 
 8. Start start.bat
 
