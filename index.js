@@ -189,15 +189,17 @@ app.post("/v1/chat/completions", apiKeyAuth, (req, res) => {
 			if (encodeURIComponent(JSON.stringify(userMessage)).length + encodeURIComponent(userQuery).length > 32000) {
 				//太长了，需要上传
 				console.log("Using file upload mode");
-				// user message to plaintext
-				let previousMessages = requestBody.messages
-					.map((msg) => {
-						return msg.content;
-					})
-					.join("\n\n");
-
 				// 试算最新一条human消息长度
-				if (encodeURIComponent(userQuery).length > 30000) userQuery = "Please view the document and reply.";
+				if (encodeURIComponent(userQuery).length > 30000) {
+					userQuery = "Please view the document and reply.";
+				}else{
+					// 删除最新一条human消息中的question
+					userMessage[userMessage.length - 1].question = "";
+				}
+				
+				// user message to plaintext
+				let previousMessages = userMessage.map((msg) => msg.question + "\n" + msg.answer).join("\n");
+
 				userMessage = [];
 
 				// GET https://you.com/api/get_nonce to get nonce
@@ -306,7 +308,7 @@ app.post("/v1/chat/completions", apiKeyAuth, (req, res) => {
 				}
 
 				try {
-					if (chunk.indexOf("event: youChatToken\n") != -1) {
+					if (chunk.indexOf("event: youChatToken\n") != -1 || chunk.indexOf(`data: {"youChatToken`) != -1) {
 						chunk.split("\n").forEach((line) => {
 							if (line.startsWith(`data: {"youChatToken"`)) {
 								let ret = line.substring(6);
@@ -407,7 +409,7 @@ app.listen(port, () => {
 	if (!validApiKey) {
 		console.log(`Proxy is currently running with no authentication`);
 	}
-
+	console.log(`API Format: OpenAI; Custom mode: ${process.env.USE_CUSTOM_MODE == "true" ? "enabled" : "disabled"}`);
 	axios
 		.get("https://ipinfo.io/json")
 		.then((response) => {
