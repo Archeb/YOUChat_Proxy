@@ -2,6 +2,7 @@ const express = require("express");
 const FormData = require("form-data");
 const docx = require("docx");
 const fs = require("fs");
+const tls = require("tls");
 const { v4: uuidv4 } = require("uuid");
 const { ProxyAgent } = require("proxy-agent");
 const agent = new ProxyAgent();
@@ -37,7 +38,9 @@ const modelMappping = {
 	"gemini-pro": "gemini_pro",
 	"gemini-1-5-pro": "gemini_1_5_pro",
 };
-
+// CloudFlare Block Mitigation
+tls.DEFAULT_MIN_VERSION = "TLSv1.3";
+tls.DEFAULT_MAX_VERSION = "TLSv1.3";
 // import config
 // first try to load from environment variables
 if (process.env.SESSIONS) {
