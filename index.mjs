@@ -1,6 +1,7 @@
 import express from "express";
 import { createEvent } from "./utils.mjs";
 import YouProvider from "./provider.mjs";
+import localtunnel from 'localtunnel';
 const app = express();
 const port = process.env.PORT || 8080;
 const validApiKey = process.env.PASSWORD;
@@ -419,12 +420,35 @@ app.use((req, res, next) => {
 	res.status(404).send("Not Found");
 });
 
-app.listen(port, () => {
+app.listen(port, async () => {
 	console.log(`YouChat proxy listening on port ${port}`);
 	if (!validApiKey) {
 		console.log(`Proxy is currently running with no authentication`);
 	}
 	console.log(`Custom mode: ${process.env.USE_CUSTOM_MODE == "true" ? "enabled" : "disabled"}`);
+	
+    // 检查是否启用隧道
+    if (process.env.ENABLE_TUNNEL === "true") {
+        // 输出等待创建隧道的提示
+        console.log("创建隧道中...");
+
+        // 设置隧道配置
+        const tunnelOptions = { port: port };
+        if (process.env.SUBDOMAIN) {
+            tunnelOptions.subdomain = process.env.SUBDOMAIN;
+        }
+
+        try {
+            const tunnel = await localtunnel(tunnelOptions);
+            console.log(`隧道已成功创建，可通过以下URL访问: ${tunnel.url}/v1`);
+
+            tunnel.on('close', () => {
+                console.log('已关闭隧道');
+            });
+        } catch (error) {
+            console.error('创建隧道失败:', error);
+        }
+    }
 });
 
 function AnthropicApiKeyAuth(req, res, next) {
