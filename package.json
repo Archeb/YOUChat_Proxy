@@ -15,6 +15,6 @@
     "form-data": "^4.0.0",
     "puppeteer-real-browser": "^1.2.18",
     "uuid": "^9.0.1",
-	  "localtunnel": ""
+    "localtunnel": ""
   }
 }
