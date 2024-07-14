@@ -413,13 +413,13 @@ class YouProvider {
 						(event) => {
 							window[callbackName]("done", "");
 							evtSource.close();
-							fetch("https://you.com/api/chat/deleteChat", {
+							/*fetch("https://you.com/api/chat/deleteChat", {//因为已经开启隐身模式了，所以就没必要删除了
 								headers: {
 									"content-type": "application/json",
 								},
 								body: JSON.stringify({ chatId: traceId }),
 								method: "DELETE",
-							});
+							});*/
 						},
 						false
 					);
