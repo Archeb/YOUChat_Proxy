@@ -372,6 +372,7 @@ class YouProvider {
 		req_param.append("page", "1");
 		req_param.append("count", "10");
 		req_param.append("safeSearch", "Off");
+		req_param.append("incognito", "true"); //隐身模式, 不会记录聊天记录
 		req_param.append("q", userQuery);
 		req_param.append("chatId", traceId);
 		req_param.append("traceId", `${traceId}|${msgid}|${new Date().toISOString()}`);
